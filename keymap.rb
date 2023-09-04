@@ -9,30 +9,30 @@ c0, c1, c2, c3, c4, c5 = 29, 28, 27, 26, 22, 20
 
 kbd.init_matrix_pins(
   [
-    [ [r0,c0], [r0,c1], [r0,c2], [r0,c3], [r0,c4], [r0,c5], [c5,r0], [c4,r0], [c3,r0], [c2,r0], [c1,r0], [c0,r0] ],
-    [ [r1,c0], [r1,c1], [r1,c2], [r1,c3], [r1,c4], [r1,c5], [c5,r1], [c4,r1], [c3,r1], [c2,r1], [c1,r1], [c0,r1] ],
-    [ [r2,c0], [r2,c1], [r2,c2], [r2,c3], [r2,c4], [r2,c5], [c5,r2], [c4,r2], [c3,r2], [c2,r2], [c1,r2], [c0,r2] ],
-    [ [r3,c0], [r3,c1], [r3,c2], [r3,c3],          [r3,c5], [c5,r3],          [c3,r3], [c2,r3], [c1,r3], [c0,r3] ]
+    [ [r0,c0], [r0,c1], [r0,c2], [r0,c3], [r0,c4], [r0,c5],          [c5,r0], [c4,r0], [c3,r0], [c2,r0], [c1,r0], [c0,r0] ],
+    [ [r1,c0], [r1,c1], [r1,c2], [r1,c3], [r1,c4], [r1,c5],          [c5,r1], [c4,r1], [c3,r1], [c2,r1], [c1,r1], [c0,r1] ],
+    [ [r2,c0], [r2,c1], [r2,c2], [r2,c3], [r2,c4], [r2,c5],          [c5,r2], [c4,r2], [c3,r2], [c2,r2], [c1,r2], [c0,r2] ],
+    [          [r3,c0], [r3,c1], [r3,c2], [r3,c3], [r3,c5], [r3,c4], [c5,r3], [c3,r3], [c2,r3], [c1,r3], [c0,r3]          ]
   ]
 )
 
 kbd.add_layer :default, %i[
-  KC_ESCAPE KC_Q    KC_W    KC_E    KC_R      KC_T     KC_Y     KC_U      KC_I     KC_O     KC_P      KC_MINUS
-  KC_TAB    KC_A    KC_S    KC_D    KC_F      KC_G     KC_H     KC_J      KC_K     KC_L     KC_SCOLON KC_BSPACE
-  KC_LSFT   KC_Z    KC_X    KC_C    KC_V      KC_B     KC_N     KC_M      KC_COMMA KC_DOT   KC_SLASH  KC_RSFT
-            RGB_HUD KC_LALT KC_LCTL LOWER_SPC KC_BTN1  KC_BTN2  RAISE_ENT IME      KC_RGUI  RGB_HUI
+  KC_ESCAPE KC_Q    KC_W    KC_E    KC_R      KC_T              KC_Y     KC_U      KC_I     KC_O     KC_P      KC_MINUS
+  KC_TAB    KC_A    KC_S    KC_D    KC_F      KC_G              KC_H     KC_J      KC_K     KC_L     KC_SCOLON KC_BSPACE
+  KC_LSFT   KC_Z    KC_X    KC_C    KC_V      KC_B              KC_N     KC_M      KC_COMMA KC_DOT   KC_SLASH  KC_RSFT
+            RGB_HUD KC_LALT KC_LCTL LOWER_SPC KC_BTN1  KC_MUTE  KC_BTN2  RAISE_ENT IME      KC_RGUI  RGB_HUI
 ]
 kbd.add_layer :raise, %i[
-  KC_GRAVE  KC_EXLM KC_AT   KC_HASH KC_DLR    KC_PERC  KC_CIRC  KC_AMPR   KC_ASTER KC_LPRN  KC_RPRN   KC_EQUAL
-  KC_TAB    KC_LABK KC_LCBR KC_LBRC KC_LPRN   KC_QUOTE KC_LEFT  KC_DOWN   KC_UP    KC_RIGHT KC_UNDS   KC_PIPE
-  KC_LSFT   KC_RABK KC_RCBR KC_RBRC KC_RPRN   KC_DQUO  KC_TILD  KC_BSLS   KC_COMMA KC_DOT   KC_SLASH  KC_RSFT
-            RGB_HUD KC_LALT KC_LCTL LOWER_SPC KC_BTN1  KC_BTN2  RAISE_ENT IME      KC_RGUI  RGB_HUI
+  KC_GRAVE  KC_EXLM KC_AT   KC_HASH KC_DLR    KC_PERC           KC_CIRC  KC_AMPR   KC_ASTER KC_LPRN  KC_RPRN   KC_EQUAL
+  KC_TAB    KC_LABK KC_LCBR KC_LBRC KC_LPRN   KC_QUOTE          KC_LEFT  KC_DOWN   KC_UP    KC_RIGHT KC_UNDS   KC_PIPE
+  KC_LSFT   KC_RABK KC_RCBR KC_RBRC KC_RPRN   KC_DQUO           KC_TILD  KC_BSLS   KC_COMMA KC_DOT   KC_SLASH  KC_RSFT
+            RGB_HUD KC_LALT KC_LCTL LOWER_SPC KC_BTN1  RGB_TOG  KC_BTN2  RAISE_ENT IME      KC_RGUI  RGB_HUI
 ]
 kbd.add_layer :lower, %i[
-  KC_ESCAPE KC_1    KC_2    KC_3    KC_4      KC_5     KC_6     KC_7      KC_8     KC_9     KC_0      KC_EQUAL
-  KC_TAB    KC_LABK KC_LCBR KC_LBRC KC_LPRN   KC_QUOTE KC_LEFT  KC_DOWN   KC_UP    KC_RIGHT KC_NO     KC_BSPACE
-  KC_LSFT   KC_RABK KC_RCBR KC_RBRC KC_RPRN   KC_DQUO  KC_NO    KC_BTN1   KC_BTN2  KC_NO    KC_NO     KC_COMMA
-            RGB_HUD KC_LALT KC_LCTL LOWER_SPC KC_BTN1  KC_BTN2  RAISE_ENT IME      KC_RGUI  RGB_HUI
+  KC_ESCAPE KC_1    KC_2    KC_3    KC_4      KC_5              KC_6     KC_7      KC_8     KC_9     KC_0      KC_EQUAL
+  KC_TAB    KC_LABK KC_LCBR KC_LBRC KC_LPRN   KC_QUOTE          KC_LEFT  KC_DOWN   KC_UP    KC_RIGHT KC_NO     KC_BSPACE
+  KC_LSFT   KC_RABK KC_RCBR KC_RBRC KC_RPRN   KC_DQUO           KC_NO    KC_BTN1   KC_BTN2  KC_NO    KC_NO     KC_COMMA
+            RGB_HUD KC_LALT KC_LCTL LOWER_SPC KC_BTN1  ADNS_TOG KC_BTN2  RAISE_ENT IME      KC_RGUI  RGB_HUI
 ]
 
 kbd.define_composite_key :IME, %i(KC_RSFT KC_RCTL KC_BSPACE)
@@ -50,9 +50,48 @@ rgb.hue = 0
 rgb.speed = 25
 kbd.append rgb
 
+class SPI
+  CPI = [ nil, 125, 250, 375, 500, 625, 750, 875, 1000, 1125, 1250, 1375 ]
+  attr_reader :power_down
+  def get_cpi
+    select do |spi|
+      spi.write(0x19)
+      spi.read(1).bytes[0] & 0b1111
+    end
+  end
+  def set_cpi(cpi)
+    select do |spi|
+      spi.write(0x19 | 0x80, cpi | 0b10000)
+    end
+    puts "CPI: #{CPI[cpi]}"
+  end
+  def reset_chip
+    select do |spi|
+      spi.write(0x3a | 0x80, 0x5a)
+    end
+    sleep_ms 10
+    set_cpi SPI::CPI.index(375)
+    puts "ADNS-5050 power UP"
+  end
+  def toggle_power
+    if @power_down
+      reset_chip
+      @power_down = false
+    else
+      select do |spi|
+        # power down
+        spi.write(0x0d | 0x80, 0b10)
+      end
+      @power_down = true
+      puts "ADNS-5050 power DOWN"
+    end
+  end
+end
+
 spi = SPI.new(unit: :BITBANG, sck_pin: 23, copi_pin: 8, cipo_pin: 8, cs_pin: 9)
 mouse = Mouse.new(driver: spi)
 mouse.task do |mouse, keyboard|
+  next if mouse.driver.power_down
   y, x = mouse.driver.select do |spi|
     spi.write(0x63) # Motion_Burst
     spi.read(2).bytes
@@ -81,25 +120,10 @@ mouse.task do |mouse, keyboard|
 end
 kbd.append mouse
 
-CPI = [ nil, 125, 250, 375, 500, 625, 750, 875, 1000, 1125, 1250, 1375 ]
-
-class SPI
-  def get_cpi
-    select do |spi|
-      spi.write(0x19)
-      spi.read(1).bytes[0] & 0b1111
-    end
-  end
-  def set_cpi(cpi)
-    select do |spi|
-      spi.write(0x19 | 0x80, cpi | 0b10000)
-    end
-    puts "CPI: #{CPI[cpi]}"
-  end
-end
-
 # Default CPI
-spi.set_cpi CPI.index(500)
+spi.reset_chip
+# :ADNS_TOG key is a power button
+kbd.define_mode_key :ADNS_TOG,  [ Proc.new { spi.toggle_power }, nil, 300, nil ]
 
 encoder = RotaryEncoder.new(0, 1)
 encoder.clockwise do
