@@ -1,6 +1,5 @@
 require "consumer_key"
-require "spi"
-require "mouse"
+require "adns5050"
 
 kbd = Keyboard.new
 
@@ -50,80 +49,13 @@ rgb.hue = 0
 rgb.speed = 25
 kbd.append rgb
 
-class SPI
-  CPI = [ nil, 125, 250, 375, 500, 625, 750, 875, 1000, 1125, 1250, 1375 ]
-  attr_reader :power_down
-  def get_cpi
-    select do |spi|
-      spi.write(0x19)
-      spi.read(1).bytes[0] & 0b1111
-    end
-  end
-  def set_cpi(cpi)
-    select do |spi|
-      spi.write(0x19 | 0x80, cpi | 0b10000)
-    end
-    puts "CPI: #{CPI[cpi]}"
-  end
-  def reset_chip
-    select do |spi|
-      spi.write(0x3a | 0x80, 0x5a)
-    end
-    sleep_ms 10
-    set_cpi SPI::CPI.index(375)
-    puts "ADNS-5050 power UP"
-  end
-  def toggle_power
-    if @power_down
-      reset_chip
-      @power_down = false
-    else
-      select do |spi|
-        # power down
-        spi.write(0x0d | 0x80, 0b10)
-      end
-      @power_down = true
-      puts "ADNS-5050 power DOWN"
-    end
-  end
-end
-
-spi = SPI.new(unit: :BITBANG, sck_pin: 23, copi_pin: 8, cipo_pin: 8, cs_pin: 9)
-mouse = Mouse.new(driver: spi)
-mouse.task do |mouse, keyboard|
-  next if mouse.driver.power_down
-  y, x = mouse.driver.select do |spi|
-    spi.write(0x63) # Motion_Burst
-    spi.read(2).bytes
-  end
-  if 0 < x || 0 < y
-    x = 0x7F < x ? (~x & 0xff) + 1 : -x
-    y = 0x7F < y ? (~y & 0xff) + 1 : -y
-    if keyboard.layer == :lower
-      x = 0 < x ? 1 : (x < 0 ? -1 : x)
-      y = 0 < y ? 1 : (y < 0 ? -1 : y)
-      USB.merge_mouse_report(0, 0, 0, y, -x)
-    else
-      mod = keyboard.modifier
-      if 0 < mod & 0b00100010
-        # Shift key pressed -> Horizontal or Vertical only
-        x.abs < y.abs ? x = 0 : y = 0
-      end
-      if 0 < mod & 0b01000100
-        # Alt key pressed -> Fix the move amount
-        x = 0 < x ? 2 : (x < 0 ? -2 : x)
-        y = 0 < y ? 2 : (y < 0 ? -2 : y)
-      end
-      USB.merge_mouse_report(0, y, x, 0, 0)
-    end
-  end
-end
-kbd.append mouse
+adns5050 = ADNS5050.new(unit: :BITBANG, sck_pin: 23, copi_pin: 8, cipo_pin: 8, cs_pin: 9)
+adns5050.reset_chip
+kbd.append adns5050.mouse
 
 # Default CPI
-spi.reset_chip
 # :ADNS_TOG key is a power button
-kbd.define_mode_key :ADNS_TOG,  [ Proc.new { spi.toggle_power }, nil, 300, nil ]
+kbd.define_mode_key :ADNS_TOG,  [ Proc.new { adns5050.toggle_power }, nil, 300, nil ]
 
 encoder = RotaryEncoder.new(0, 1)
 encoder.clockwise do
@@ -133,9 +65,9 @@ encoder.clockwise do
   when :raise
     kbd.send_key :RGB_SPI
   when :lower
-    cpi = spi.get_cpi + 1
+    cpi = adns5050.get_cpi + 1
     cpi = 11 if 11 < cpi
-    spi.set_cpi cpi
+    adns5050.set_cpi cpi
   end
 end
 encoder.counterclockwise do
@@ -145,12 +77,13 @@ encoder.counterclockwise do
   when :raise
     kbd.send_key :RGB_SPD
   when :lower
-    cpi = spi.get_cpi - 1
+    cpi = adns5050.get_cpi - 1
     cpi = 1 if cpi < 1
-    spi.set_cpi cpi
+    adns5050.set_cpi cpi
   end
 end
 kbd.append encoder
 
 kbd.start!
+
 
